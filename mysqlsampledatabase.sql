@@ -7958,4 +7958,42 @@ begin
     select * from customers where customerNumber = 175;
 end //
 
+# them tham so loai IN
+delimiter //
+create procedure getCusById(in cusNum int(11))
+begin
+    select * from customers where customerNumber = cusNum;
+end //
+Delimiter ;
+call getCusById(175);
 
+# tham so loai OUT
+delimiter //
+create procedure getCustomersCountByCity(
+in in_city varchar(50),
+out total int
+)
+begin
+    select count(customerNumber)
+        into total
+    from customers where city = in_city;
+end //
+delimiter ;
+call getCustomersCountByCity('Lyon',@total);
+select @total;
+
+# tham so INOUT
+delimiter //
+create procedure setCounter(
+inout  counter int,
+in inc int
+)
+begin
+    set counter = counter+inc;
+end //
+delimiter ;
+set @counter = 1;
+call setCounter(@counter,1); -- 2
+call setCounter(@counter,1); -- 3
+call setCounter(@counter,5);  -- 8
+select @counter -- 8;
