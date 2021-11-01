@@ -7996,4 +7996,15 @@ set @counter = 1;
 call setCounter(@counter,1); -- 2
 call setCounter(@counter,1); -- 3
 call setCounter(@counter,5);  -- 8
-select @counter -- 8;
+select @counter; -- 8;
+
+#tao view
+create view customer_views as select customerNumber,customerName,phone from customers;
+select * from customer_views;
+#cap nhat view
+create or replace view customer_views as
+    select customerName,customerNumber,contactFirstName,contactLastName, phone from customers
+where city = 'Nantes';
+select * from classicmodels.customer_views;
+#xoa view
+drop view customer_views;
