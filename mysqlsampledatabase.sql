@@ -7929,14 +7929,33 @@ insert  into `products`(`productCode`,`productName`,`productLine`,`productScale`
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 SELECT * FROM customers WHERE customerName = 'Land of Toys Inc.';
+
 explain SELECT * FROM customers WHERE customerName = 'Land of Toys Inc.';
 alter table customers add index idx_customerNaem (customerName);
 
 alter table customers add index idx_fullName (contactFirstName,contactLastName);
 explain select * from customers where contactFirstName = 'Jean' or contactFirstName = 'King';
+
 -- xoa chi muc cho bang
 alter table customers drop index idx_fullName;
 
+#tao mysql sored procedure dau tien
+DELIMITER //
+CREATE PROCEDURE findAllCustomer()
+BEGIN
+    SELECT * FROM customers;
+end //
+DELIMITER ;
 
+# GOI PROCEDURED
+CALL findAllCustomer();
+
+#XOA PROCEDURE DE TAO LAI
+delimiter //
+DROP PROCEDURE IF EXISTS findAllCustomer//
+create procedure findAllCustomers()
+begin
+    select * from customers where customerNumber = 175;
+end //
 
 
